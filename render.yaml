@@ -2,5 +2,13 @@ services:
   - type: web
     name: voyage
     env: java
-    buildCommand: mvn clean package
+    plan: free
+    buildCommand: |
+      curl -s "https://get.sdkman.io" | bash
+      source "$HOME/.sdkman/bin/sdkman-init.sh"
+      sdk install maven
+      mvn clean package
     startCommand: java -jar target/voyage.war
+    envVars:
+      - key: JAVA_VERSION
+        value: 8
