@@ -18,7 +18,7 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <p class="hero-text">Your Personal Airbnb Solution</p>
         <a href="findlistings" class="btn btn-white">explore</a>
       </div>
-    </div>
+      </div>
     <script src="js/app.js"></script>
   </body>
 </html>
