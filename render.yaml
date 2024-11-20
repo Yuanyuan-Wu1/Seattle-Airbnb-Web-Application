@@ -11,4 +11,4 @@ services:
     startCommand: java -jar target/voyage.war
     envVars:
       - key: JAVA_VERSION
-        value: 8
+        value: 17
