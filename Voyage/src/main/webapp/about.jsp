@@ -57,11 +57,6 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         </article>
         <!-- about info -->
         <article class="about-info">
-          <h3>Our Team</h3>
-          <p>
-            Huizhong Zuo, Jia Xu, Yiwei Xia, Chujun Gong, Sijing Peng, Yang Liu,
-            Yuanyuan Wu
-          </p>
           <br></br>
           <h3>Value</h3>
           <p>
