@@ -17,6 +17,8 @@ import voyage.dal.ListingsDao;
 import voyage.dal.PriceCalendarDao;
 import voyage.model.Listings;
 import voyage.model.ListingsWithMinPrice;
+import voyage.model.Messages;
+import java.util.stream.Collectors;
 
 /**
  * Servlet implementation class FindListings
@@ -37,9 +39,31 @@ public class FindListings extends HttpServlet {
 
 
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("/FindListings.jsp").forward(request, response);
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 获取 ListingsDao 实例
+		ListingsDao listingsDao = ListingsDao.getInstance();
+
+		try {
+			// 获取前20个有图片的评分最高的房源
+			List<ListingsWithMinPrice> recommendations = listingsDao.getTopRatedListings(20).stream()
+					.filter(listing -> listing.getListing().getPictureURL() != null
+							&& !listing.getListing().getPictureURL().isEmpty())
+					.limit(20)
+					.collect(Collectors.toList());
+
+			req.setAttribute("listingsWithMinPrices", recommendations);
+
+			// 添加推荐标题
+			Messages messages = new Messages();
+			messages.setTitle("Top Rated Listings in Seattle");
+			req.setAttribute("messages", messages);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new IOException(e);
+		}
+
+		req.getRequestDispatcher("/FindListings.jsp").forward(req, resp);
 	}
 
 	@Override

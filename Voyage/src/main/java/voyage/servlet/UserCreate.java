@@ -45,37 +45,31 @@ public class UserCreate extends HttpServlet {
 
 		// Retrieve and validate name.
 		String userName = req.getParameter("username");
+		String password = req.getParameter("password");
+		String email = req.getParameter("email");
+
 		if (userName == null || userName.trim().isEmpty()) {
 			messages.put("success", "Invalid UserName");
 		} else {
 			try {
-				Users user = usersDao.getUsersByUserName(userName);
-				if (user != null) {
-					messages.put("success", "Username " + userName + " already exists.");
-				} else {
-					// Create the Users.
-					String email = req.getParameter("email");
-					String password = req.getParameter("password");
-					String firstName = req.getParameter("firstname");
-					String lastName = req.getParameter("lastname");
-					if (email == null || email.trim().isEmpty()) {
-						messages.put("success", "Please enter an email.");
-					} else if (password == null || password.trim().isEmpty()) {
-						messages.put("success", "Please enter a password.");
-					}else {
-						user = new Users(userName, email, password, firstName, lastName);
-						user = usersDao.create(user);
-						messages.put("success", "Successfully created " + userName);
-					}
-
+				Users existingUser = usersDao.getUsersByUserName(userName);
+				if (existingUser != null) {
+					messages.put("success", "Username already exists. Please choose another one.");
+					req.getRequestDispatcher("/FindUsers.jsp").forward(req, resp);
+					return;
 				}
+				Users user = new Users(userName, password, email);
+				user = usersDao.create(user);
+				messages.put("success", "Successfully created " + userName + ". Please login.");
+				req.getSession().setAttribute("messages", messages);
+				resp.sendRedirect("findlistings");  // 重定向到页面
+				return;
 			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
+				messages.put("success", "Failed to create user. Please try again.");
+				req.getRequestDispatcher("/FindUsers.jsp").forward(req, resp);
+				return;
 			}
-
 		}
-
 		req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
 	}
 }

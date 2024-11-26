@@ -10,7 +10,7 @@ public class ConnectionManager {
 	// User to connect to the database instance. By default, this is "root".
 	private final String user = "root";
 	// Password for the user.
-	private final String password = "19870210";
+	private final String password = "password";
 	// URI to your database server. If running on the same machine, then this is "localhost".
 	private final String hostName = "localhost";
 	// Port to your database server. By default, this is 3307.
@@ -38,8 +38,8 @@ public class ConnectionManager {
 				throw new SQLException(e);
 			}
 			connection = DriverManager.getConnection(
-			    "jdbc:mysql://" + this.hostName + ":" + this.port + "/" + this.schema + "?useSSL=false",
-			    connectionProperties);
+					"jdbc:mysql://" + this.hostName + ":" + this.port + "/" + this.schema + "?useSSL=false&allowPublicKeyRetrieval=true",
+					connectionProperties);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;

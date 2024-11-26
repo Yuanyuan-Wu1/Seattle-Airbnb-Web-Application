@@ -44,17 +44,12 @@ Voyage is a one-stop website for Airbnb travel planning that helps users find th
    bash
    git clone https://github.com/yourusername/Voyage.git
    cd Voyage
-2. Configure database connection
-- Create a MySQL database
-- Update database credentials in `src/main/resources/application.properties`
 
-3. Build the project
-   bash
-   mvn clean install
 4. Deploy to Tomcat
 - Copy the generated WAR file to Tomcat's webapps directory
 - Start Tomcat server
-
+  cd apache-tomcat-9.0.97/bin
+  ./startup.sh
 5. Access the application  http://localhost:8080/Voyage/
 
 ## Project Structure
@@ -79,3 +74,26 @@ Voyage/
 - Tomcat
 $CATALINA_HOME/bin/shutdown.sh
 $CATALINA_HOME/bin/startup.sh
+
+
+brew services stop mysql@8.0
+
+brew services start mysql@8.0
+cd /Users/yoyowu/NEU/Seattle-Airbnb-Web-Application
+# 1. 复制更新的文件到 Tomcat webapps 目录
+cp -r Voyage/src/main/webapp/* apache-tomcat-9.0.97/webapps/Voyage/
+
+# 2. 如果修改了 Java 文件，需要重新编译并复制 class 文件
+javac -cp "lib/*:." voyage/servlet/*.java
+cp -r voyage apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/classes/
+
+# 3. 重启 Tomcat
+./apache-tomcat-9.0.97/bin/shutdown.sh
+./apache-tomcat-9.0.97/bin/startup.sh
+
+启动 Tomcat
+cd apache-tomcat-9.0.97/bin
+./startup.sh
+运行自动部署脚本：
+cd /Users/yoyowu/NEU/Seattle-Airbnb-Web-Application
+./auto-deploy.sh

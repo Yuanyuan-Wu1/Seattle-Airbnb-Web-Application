@@ -14,6 +14,7 @@ import voyage.model.Listings;
 import voyage.model.Neighborhoods;
 import voyage.model.PropertyTypes;
 import voyage.model.Listings.RoomType;
+import voyage.model.ListingsWithMinPrice;
 
 public class ListingsDao {
 	protected ConnectionManager connectionManager;
@@ -305,6 +306,68 @@ public class ListingsDao {
 			if (results != null) {
 				results.close();
 			}
+		}
+		return listings;
+	}
+	public List<ListingsWithMinPrice> getTopRatedListings(int limit) throws SQLException {
+		String query = "SELECT * FROM Listings WHERE ReviewScore IS NOT NULL " +
+				"ORDER BY ReviewScore DESC LIMIT ?";
+
+		List<ListingsWithMinPrice> listings = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(query);
+			selectStmt.setInt(1, limit);
+			results = selectStmt.executeQuery();
+
+			while (results.next()) {
+				int listingId = results.getInt("ListingId");
+				String name = results.getString("Name");
+				String listingURL = results.getString("ListingURL");
+				String description = results.getString("Description");
+				String neighborhoodOverview = results.getString("NeighborhoodOverview");
+				String pictureURL = results.getString("PictureURL");
+				int hostId = results.getInt("HostId");
+				int neighborhoodId = results.getInt("NeighborhoodId");
+				Double latitude = results.getDouble("Latitude");
+				Double longtitude = results.getDouble("Longtitude");
+				int propertyTypeId = results.getInt("PropertyTypeId");
+				String roomType = results.getString("RoomType");
+				int acommodates = results.getInt("Acommodates");
+				String bathroomsText = results.getString("BathroomsText");
+				int bedrooms = results.getInt("Bedrooms");
+				int beds = results.getInt("Beds");
+				int minNights = results.getInt("MinNights");
+				int maxNights = results.getInt("MaxNights");
+				Double reviewScore = results.getDouble("ReviewScore");
+				Boolean instantBookable = results.getBoolean("InstantBookable");
+				String cityName = results.getString("CityName");
+
+				Hosts hosts = new HostsDao().getHostsByHostId(hostId);
+				Neighborhoods neighborhoods = new NeighborhoodsDao().getNeighborhoodsByNeighborhoodId(neighborhoodId);
+				PropertyTypes propertyTypes = new PropertyTypesDao().getPropertyTypesByPropertyTypeId(propertyTypeId);
+				RoomType currentRoomType = RoomType.getRoomTypeByValue(roomType);
+				Cities cities = new CitiesDao().getCitiesByName(cityName).get(0);
+
+				Listings listing = new Listings(listingId, name, listingURL, description, neighborhoodOverview,
+						pictureURL, hosts, neighborhoods, latitude, longtitude, propertyTypes, currentRoomType,
+						acommodates, bathroomsText, bedrooms, beds, minNights, maxNights, reviewScore, instantBookable, cities);
+
+				double minPrice = new PriceCalendarDao().getMinPCByListingId(listingId);
+				ListingsWithMinPrice listingWithPrice = new ListingsWithMinPrice(listing, minPrice);
+				listings.add(listingWithPrice);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (connection != null) connection.close();
+			if (selectStmt != null) selectStmt.close();
+			if (results != null) results.close();
 		}
 		return listings;
 	}

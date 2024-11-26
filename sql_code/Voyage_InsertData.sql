@@ -7,7 +7,7 @@ INSERT INTO Users(UserName,Email,Password,FirstName,LastName)
   VALUES('user2','user2@fake.com','password2','First2','Last2');
   
 # Hosts
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/listings.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/listings.csv'
   IGNORE INTO TABLE Hosts
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -27,7 +27,7 @@ INSERT INTO Cities(Name,State,Country)
   VALUES('Seattle','Washington','United States');
 
 # NeighborhoodGroups
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/neighbourhoods.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/neighbourhoods.csv'
   IGNORE INTO TABLE NeighborhoodGroups
   FIELDS TERMINATED BY ','
   LINES TERMINATED BY '\n'
@@ -36,7 +36,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/neighbou
   SET CityId = (SELECT CityId FROM Cities WHERE Name = 'Seattle');
 
 # Neighborhoods
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/neighbourhoods.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/neighbourhoods.csv'
   INTO TABLE Neighborhoods
   FIELDS TERMINATED BY ','
   LINES TERMINATED BY '\n'
@@ -45,7 +45,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/neighbou
   SET NeighborhoodGroupId = (SELECT NeighborhoodGroupId FROM NeighborhoodGroups WHERE Name = @NeighborhoodGroupName);
 
 # PropertyTypes
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/listings.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/listings.csv'
   IGNORE INTO TABLE PropertyTypes
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -62,7 +62,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/listings
   SET PropertyType = TRIM(@ProType);
 
 # Listings
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/listings.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/listings.csv'
   INTO TABLE Listings
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -85,7 +85,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/listings
       CityName = "Seattle";
 
 # Amenities
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/amenities_output.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/amenities_output.csv'
   IGNORE INTO TABLE Amenities
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -94,7 +94,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/amenitie
   (@dummy, AmenityId, Type);
 
 # ListingAmenityAssociation
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/amenities_output.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/amenities_output.csv'
   INTO TABLE ListingAmenityAssociation
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -103,7 +103,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/amenitie
   (ListingId, AmenityId, @dummy);
 
 # PriceCalendar
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/calendar.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/calendar.csv'
   INTO TABLE PriceCalendar
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -114,7 +114,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/calendar
 
 
 # AirbnbReviewers
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/reviews.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/reviews.csv'
   IGNORE INTO TABLE AirbnbReviewers
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'
@@ -123,7 +123,7 @@ LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/reviews.
   (@dummy, @dummy, @dummy, ReviewerId, ReviewerName, @dummy);
 
 # AirbnbReviews
-LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/Data/reviews.csv'
+LOAD DATA INFILE '/Users/yoyowu/NEU/Seattle-Airbnb-Web-Application/apache-tomcat-9.0.97/webapps/Voyage/WEB-INF/Data/reviews.csv'
   INTO TABLE AirbnbReviews
   FIELDS TERMINATED BY ','
   OPTIONALLY ENCLOSED BY '"'

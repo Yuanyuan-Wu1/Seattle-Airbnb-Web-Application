@@ -15,6 +15,13 @@ public class Users {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	public Users(String userName, String password, String email) {
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.firstName = "";  // 设置默认值
+		this.lastName = "";   // 设置默认值
+	}
 
 	public Users(String userName) {
 		this.userName = userName;
