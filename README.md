@@ -208,12 +208,8 @@ Common problems and solutions:
 - Review System
 - Host Dashboard
 
-## Contributors
-[Your Name]
-[Other Contributors]
-
 ## License
-[License Type] - see LICENSE.md for details
+[License Type] 
 
 ## Acknowledgments
 - Data source: Seattle Airbnb Open Data
