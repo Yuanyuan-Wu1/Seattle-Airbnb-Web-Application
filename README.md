@@ -17,6 +17,14 @@
 
 ## Project Overview
 Voyage is a web application that replicates core Airbnb functionalities, allowing users to browse and search for accommodations in Seattle. Built with Java EE technologies and following the MVC architecture pattern.
+### Live Demo
+- URL: http://167.234.209.20:8080/voyage
+
+### Current Features
+- Smart Search: Advanced search features for finding perfect stays
+- Local Insights: Explore Seattle's unique neighborhoods
+- Verified Reviews: Authentic guest reviews system
+- User Management: Login/Sign up functionality
 
 ## Technology Stack
 - **Backend**: Java EE (Jakarta EE)
@@ -209,7 +217,7 @@ Common problems and solutions:
 - Host Dashboard
 
 ## License
-[License Type] 
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
 ## Acknowledgments
 - Data source: Seattle Airbnb Open Data
